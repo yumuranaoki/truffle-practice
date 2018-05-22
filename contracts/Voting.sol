@@ -18,12 +18,8 @@ contract Voting {
 
     Option[] public options;
 
-    function newOption() external {
+    function newOption() external returns(uint) {
         uint id = options.length;
-        options.push(Option(id, 0));
+        return options.push(Option(id, 0));
     }
-
-    function add(uint _num) public pure returns(uint) {
-        return _num++;
-    } 
 }
