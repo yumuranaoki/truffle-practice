@@ -10,12 +10,15 @@
 
     <!-- contractとのinteraction -->
     <script>
+      
       //providerをセット
+      
       if (typeof web3 !== 'undefined') {
         web3js = new Web3(web3.currentProvider);
       } else {          
         web3js = new Web3(new web3.providers.HttpProvider('http://localhost:7545'));
       }
+      
       
       //abiとaddressからcontractをセット      
       abiVoting = [
@@ -77,8 +80,9 @@
         }
       ];
       addressVoting = "0x345ca3e014aaf5dca488057592ee47305d9b3e10";
-      Voting = web3js.eth.contract(abiVoting).at(addressVoting);
-      console.log(Voting);
+      //Voting = web3js.eth.contract(abiVoting).at(addressVoting);
+      //console.log(Voting);
+      /*
       Voting.options(0, function(err, result) {
         if (!err) {
           console.log(result);
@@ -93,6 +97,7 @@
           console.log(error);
         }
       });
+      */
     </script>
     <script src="bundle.js"></script>
   </body>
