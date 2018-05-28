@@ -5,6 +5,7 @@ import Web3 from 'web3';
 class App extends React.Component {
   constructor(props) {
     super(props);
+    //constをclassの外に出す
     const abiVoting = [
       {
         "constant": false,
