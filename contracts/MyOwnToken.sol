@@ -6,26 +6,26 @@ contract MyOwnToken is ERC721Token {
     //Mapping from tokenId to tokenPrice
     mapping (uint256 => uint256) internal tokenPrice;
 
-    //eventを追加したい
+    //implement event for setTokenURI
 
     constructor() public ERC721Token("MyOwnToken", "MOT") {}
 
     function mint(uint256 _tokenPrice) external {
-        uint256 tokenId = allToken.length;
+        uint256 tokenId = allTokens.length;
         super._mint(msg.sender, tokenId);
-        tokenPrice[_tokenId] = _tokenPrice;
+        tokenPrice[tokenId] = _tokenPrice;
     }
 
     function setTokenUri(uint256 _tokenId, string _uri) external onlyOwnerOf(_tokenId) {
-        super._setTokenUri(_tokenId, _uri);
-        //eventをfire
+        super._setTokenURI(_tokenId, _uri);
+        //fire some event
     }
 
     function buyToken(uint256 _tokenId, bytes _data) external payable {
-        //safeTransferFromに含まれているかも
+        //first requirement might be included in safeTransferFrom
         require(tokenOwner[_tokenId] != address(0));
         require(msg.value >= tokenPrice[_tokenId]);
-        safeTransferFrom(tokenOwner[_tokenId], msg.sender, _tokenId, data);
+        safeTransferFrom(tokenOwner[_tokenId], msg.sender, _tokenId, _data);
         super._burn(msg.sender, _tokenId);
     }
 
