@@ -1,51 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Web3 from 'web3';
+import { abiVoting, addressVoting, abiMyOwnToken, addressMyOwnToken } from './config.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    //constをclassの外に出す
-    const abiVoting = [
-      {
-        "constant": false,
-        "inputs": [],
-        "name": "newOption",
-        "outputs": [
-          {
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [
-          {
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "name": "options",
-        "outputs": [
-          {
-            "name": "id",
-            "type": "uint256"
-          },
-          {
-            "name": "point",
-            "type": "uint8"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      }
-    ]
-    const addressVoting = "0x345ca3e014aaf5dca488057592ee47305d9b3e10";
     this.state = {
       voting: web3.eth.contract(abiVoting).at(addressVoting)
     };
