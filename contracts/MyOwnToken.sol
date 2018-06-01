@@ -4,7 +4,7 @@ import "openzeppelin-solidity/contracts/token/ERC721/ERC721Token.sol";
 
 contract MyOwnToken is ERC721Token {
     //Mapping from tokenId to tokenPrice
-    mapping (uint256 => uint256) internal tokenPrice;
+    mapping (uint256 => uint256) public tokenPrice;
 
     //implement event for setTokenURI
 

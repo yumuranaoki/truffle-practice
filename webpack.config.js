@@ -1,4 +1,6 @@
 module.exports = {
+    mode: "development",
+    watch: true,
     entry: __dirname + "/src/index.js",
     output: {
         path: __dirname + "/dist",

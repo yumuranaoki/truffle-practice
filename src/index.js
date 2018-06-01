@@ -7,25 +7,46 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      voting: web3.eth.contract(abiVoting).at(addressVoting)
-    };
+      value: '',
+    }
+    this.voting = web3.eth.contract(abiVoting).at(addressVoting);
+    this.myOwnToken = web3.eth.contract(abiMyOwnToken).at(addressMyOwnToken);
+    //すべてのtoken（もしくは自分のtoken）をpropertyとして持ち、id, price, addressを表示
   }
 
   componentDidMount() {
-    console.log('hola');
-    if (typeof web3 !== 'undefined') {
-      console.log('already');
+    if (typeof web3 !== 'undefined') {      
       web3 = new Web3(web3.currentProvider);
     } else {          
       web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
-      console.log('just set');
-    } 
-  }  
+    }
+    this.myOwnToken.Transfer([{_to: web3.eth.accounts[0]}], function(err, result) {
+      if (!err) {
+        console.log(result.args._tokenId.c[0]);
+      } else {
+        cosole.log(err);
+      }
+    })
+  }
 
   newOption() {
-    this.state.voting.newOption(function(error, result) {
+    this.voting.newOption(function(error, result) {
       if (!error) {
         console.log(result);
+      } else {
+        console.log(error);
+      }
+    });
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value}); 
+  }
+
+  handleSubmit() {
+    this.myOwnToken.mint(this.state.value, function(error, result) {
+      if (!error) {
+        console.log("success");
       } else {
         console.log(error);
       }
@@ -35,8 +56,13 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Hello React!</h1>
-        <button onClick={() => this.newOption()}>button</button>
+        <form onSubmit={event => this.handleSubmit()}>
+          <label>
+            Value
+            <input type="text" value={this.state.value} onChange={event => this.handleChange(event)} />
+            <input type="submit" value="Submit" />
+          </label>
+        </form>
       </div>
     );
   }
